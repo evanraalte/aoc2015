@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.13.4)
+
+project(AOC2015)
+
+add_executable(${PROJECT_NAME} main.cpp)
+
+
+FILE(GLOB days RELATIVE ${PROJECT_SOURCE_DIR}  ${PROJECT_SOURCE_DIR}/day*)
+
+FOREACH(day ${days})
+    add_library(${day} ${day}/${day}.cpp)
+    target_include_directories(${PROJECT_NAME} PUBLIC  ${day})
+    target_link_libraries(${PROJECT_NAME} ${day})
+ENDFOREACH()
