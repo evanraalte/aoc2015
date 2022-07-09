@@ -3,6 +3,7 @@
 #include <day2.h>
 #include <day3.h>
 #include <day4.h>
+#include <day5.h>
 #include <md5.h>
 int main(void) {
 
@@ -12,7 +13,9 @@ int main(void) {
     // std::cout << "day2::b() = " << day2::b() << "\n";
     // std::cout << "day3::a() = " << day3::a() << "\n";
     // std::cout << "day3::b() = " << day3::b() << "\n";
-    std::cout << "day4::a() = " << day4::a() << "\n";
-    std::cout << "day4::b() = " << day4::b() << "\n";
+    // std::cout << "day4::a() = " << day4::a() << "\n";
+    // std::cout << "day4::b() = " << day4::b() << "\n";
+    std::cout << "day5::a() = " << day5::a() << "\n";
+    std::cout << "day5::b() = " << day5::b() << "\n";
     return 0;
 }

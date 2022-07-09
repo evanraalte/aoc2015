@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13.4)
 project(AOC2015)
 
 add_executable(${PROJECT_NAME} main.cpp)
-
+set (CMAKE_CXX_STANDARD 11)
 
 FILE(GLOB days RELATIVE ${PROJECT_SOURCE_DIR}  ${PROJECT_SOURCE_DIR}/day*)
 
