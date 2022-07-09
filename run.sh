@@ -1,1 +1,1 @@
-./out/build/AOC2015
+./out/build/AOC2015 $1
