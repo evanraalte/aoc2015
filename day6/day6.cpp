@@ -85,10 +85,12 @@ namespace day6
                         };
                         break;
                 }
+                std::set<int> to_change;
                 for(int x=x0; x <=x1; x++){
                     for(int y=y0; y <=y1; y++){
                         int c = x + 1000*y;
-                        f(c,&grid);
+                        to_change.insert(c);
+                        // f(c,&grid);
                     }
                 }
             } else {
