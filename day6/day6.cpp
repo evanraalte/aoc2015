@@ -50,7 +50,7 @@ namespace day6
         buffer << t.rdbuf(); 
         std::regex rexp(R"((turn off|turn on|toggle) (\d+),(\d+) through (\d+),(\d+))");
         std::smatch matches;
-        std::set<Coordinate> grid;
+        std::set<int> grid;
         while (std::getline(buffer, line)) {
             if(std::regex_search(line, matches, rexp)){
                 std::string cmd_string = matches[1].str();
@@ -67,23 +67,28 @@ namespace day6
                 int x1 = stoi(matches[4].str());
                 int y1 = stoi(matches[5].str());
 
+                std::function<void(int, std::set<int>*)> f;
+                switch(cmd){
+                    case turn_on:
+                        f = [](int c, std::set<int> *grid) {grid->insert(c);};
+                        break;
+                    case turn_off:
+                        f = [](int c, std::set<int> *grid) {grid->erase(c);};
+                        break;
+                    case toggle:
+                        f = [](int c, std::set<int> *grid) {
+                            if (grid->count(c)>0){
+                                grid->erase(c);
+                            } else {
+                                grid->insert(c);
+                            }
+                        };
+                        break;
+                }
                 for(int x=x0; x <=x1; x++){
                     for(int y=y0; y <=y1; y++){
-                        switch(cmd){
-                            case turn_on:
-                                grid.insert(Coordinate{x,y});
-                                break;
-                            case turn_off:
-                                grid.erase(Coordinate{x,y});
-                                break;
-                            case toggle:
-                                if (grid.count(Coordinate{x,y})){
-                                    grid.erase(Coordinate{x,y});
-                                } else {
-                                    grid.insert(Coordinate{x,y});
-                                }
-                                break;
-                        }
+                        int c = x + 1000*y;
+                        f(c,&grid);
                     }
                 }
             } else {
