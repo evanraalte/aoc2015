@@ -6,6 +6,7 @@
 #include <day4.h>
 #include <day5.h>
 #include <day6.h>
+#include <day7.h>
 
 int main(int argc, char** argv){
     if(argc != 2){
@@ -46,6 +47,10 @@ int main(int argc, char** argv){
         case 6:
             std::cout << "day6::a() = " << day6::a() << "\n";
             std::cout << "day6::b() = " << day6::b() << "\n";
+            break;
+        case 7:
+            std::cout << "day7::a() = " << day7::a() << "\n";
+            std::cout << "day7::b() = " << day7::b() << "\n";
             break;
         default:
             std::cout << "Not implemented\n";
