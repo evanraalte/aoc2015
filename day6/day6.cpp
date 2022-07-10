@@ -37,6 +37,8 @@ namespace day6
         return c.str == p.second;
     }
 
+    enum Command {turn_on, turn_off, toggle};
+
     int a(void) {
         std::ifstream t("day6/input");
         if (!t){
@@ -51,7 +53,15 @@ namespace day6
         std::set<Coordinate> grid;
         while (std::getline(buffer, line)) {
             if(std::regex_search(line, matches, rexp)){
-                std::string cmd = matches[1].str();
+                std::string cmd_string = matches[1].str();
+                Command cmd;
+                if (cmd_string.compare("turn on") == 0){
+                    cmd = turn_on;
+                } else if (cmd_string.compare("turn off") == 0){
+                    cmd = turn_off;
+                } else if (cmd_string.compare("toggle") == 0){
+                    cmd = toggle;
+                }
                 int x0 = stoi(matches[2].str());
                 int y0 = stoi(matches[3].str());
                 int x1 = stoi(matches[4].str());
@@ -59,16 +69,20 @@ namespace day6
 
                 for(int x=x0; x <=x1; x++){
                     for(int y=y0; y <=y1; y++){
-                        if (cmd.compare("turn on") == 0){
+                        switch(cmd){
+                            case turn_on:
                                 grid.insert(Coordinate{x,y});
-                        } else if (cmd.compare("turn off") == 0){
+                                break;
+                            case turn_off:
                                 grid.erase(Coordinate{x,y});
-                        } else if (cmd.compare("toggle") == 0){
+                                break;
+                            case toggle:
                                 if (grid.count(Coordinate{x,y})){
                                     grid.erase(Coordinate{x,y});
                                 } else {
                                     grid.insert(Coordinate{x,y});
                                 }
+                                break;
                         }
                     }
                 }
@@ -94,7 +108,15 @@ namespace day6
         std::map<Coordinate, int> grid;
         while (std::getline(buffer, line)) {
             if(std::regex_search(line, matches, rexp)){
-                std::string cmd = matches[1].str();
+                std::string cmd_string = matches[1].str();
+                Command cmd;
+                if (cmd_string.compare("turn on") == 0){
+                    cmd = turn_on;
+                } else if (cmd_string.compare("turn off") == 0){
+                    cmd = turn_off;
+                } else if (cmd_string.compare("toggle") == 0){
+                    cmd = toggle;
+                }
                 int x0 = stoi(matches[2].str());
                 int y0 = stoi(matches[3].str());
                 int x1 = stoi(matches[4].str());
@@ -102,11 +124,11 @@ namespace day6
 
                 for(int x=x0; x <=x1; x++){
                     for(int y=y0; y <=y1; y++){
-                        if (cmd.compare("turn on") == 0){
+                        if (cmd == turn_on){
                                 grid[Coordinate{x,y}]++;
-                        } else if (cmd.compare("turn off") == 0 && grid[Coordinate{x,y}]>=1){
+                        } else if (cmd == turn_off && grid[Coordinate{x,y}]>=1){
                                 grid[Coordinate{x,y}]--;
-                        } else if (cmd.compare("toggle") == 0){
+                        } else if (cmd == toggle){
                                 grid[Coordinate{x,y}] +=2;
                         }
                     }
