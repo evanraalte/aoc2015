@@ -8,7 +8,7 @@
 #include <list>
 #include <map>
 #include "day6.h"
-
+#include <set>
 namespace day6
 {
 
@@ -48,7 +48,7 @@ namespace day6
         buffer << t.rdbuf(); 
         std::regex rexp(R"((turn off|turn on|toggle) (\d+),(\d+) through (\d+),(\d+))");
         std::smatch matches;
-        std::map<Coordinate, bool> grid;
+        std::set<Coordinate> grid;
         while (std::getline(buffer, line)) {
             if(std::regex_search(line, matches, rexp)){
                 std::string cmd = matches[1].str();
@@ -60,11 +60,15 @@ namespace day6
                 for(int x=x0; x <=x1; x++){
                     for(int y=y0; y <=y1; y++){
                         if (cmd.compare("turn on") == 0){
-                                grid[Coordinate{x,y}] = true;
+                                grid.insert(Coordinate{x,y});
                         } else if (cmd.compare("turn off") == 0){
-                                grid[Coordinate{x,y}] = false;
+                                grid.erase(Coordinate{x,y});
                         } else if (cmd.compare("toggle") == 0){
-                                grid[Coordinate{x,y}] = !grid[Coordinate{x,y}];
+                                if (grid.count(Coordinate{x,y})){
+                                    grid.erase(Coordinate{x,y});
+                                } else {
+                                    grid.insert(Coordinate{x,y});
+                                }
                         }
                     }
                 }
@@ -74,11 +78,7 @@ namespace day6
 
 
         }
-        auto count = 0;
-        for (auto&& p : grid)
-            if (p.second)
-                ++count;
-        return count;
+        return grid.size();
     }
     int b(void) {
         std::ifstream t("day6/input");
